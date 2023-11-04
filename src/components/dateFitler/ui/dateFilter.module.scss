@@ -1,0 +1,52 @@
+.date__wrapper {
+  position: relative;
+  width: 260px;
+
+  > .date__preview {
+    width: fit-content;
+    margin-bottom: 20px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid gray;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.1s ease-in;
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+
+    > span {
+      color: rgba(0, 0, 0, 0.473);
+    }
+  }
+
+  > .dateRangePicker {
+    position: absolute;
+    z-index: 1;
+    top: 36px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .date__wrapper {
+    > .dateRangePicker {
+      flex-wrap: wrap;
+
+      > div.rdrDefinedRangesWrapper {
+        display: none !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .date__wrapper {
+    > .dateRangePicker {
+      width: 300px;
+    }
+  }
+}

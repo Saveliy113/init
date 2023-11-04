@@ -1,0 +1,71 @@
+.columnActions {
+  padding: 0 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  > .btnsWrapper {
+    display: flex;
+
+    > .columnsEditBtn,
+    .deleteColumnBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      padding: 3px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      overflow: hidden;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+.footerBtns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+
+  > .addColumnItemBtn {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: 1px solid #24a0ed;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    > svg {
+      stroke: #24a0ed;
+    }
+
+    &:hover {
+      background-color: #24a0ed;
+      > svg {
+        stroke: white;
+      }
+    }
+  }
+
+  > textarea {
+    width: 90%;
+    height: 100px;
+    padding: 10px;
+    resize: none;
+    border-radius: 8px;
+  }
+}
