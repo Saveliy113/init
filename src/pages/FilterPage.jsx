@@ -30,7 +30,9 @@ const FilterPage = () => {
         rows={rows}
         columns={columns}
         pageSizeOptions={[5, 10, 20]}
-        initialState={{ pagination: { paginationModel: { pageSize: 5 } } }}
+        checkboxSelection
+        disableSelectionOnClick
+        initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
       />
     </div>
   );
