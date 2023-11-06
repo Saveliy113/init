@@ -9,7 +9,7 @@ import TrelloPage from './pages/TrelloPage';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>Hello world!</div>,
+    element: <App />,
   },
   {
     path: '/filter',
