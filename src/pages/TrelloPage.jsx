@@ -2,19 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import initialData from '../assets/trelloData';
 import Column from '../components/column/Column';
-import { styled } from 'styled-components';
-import styles from './trello.module.scss';
 import { XCircle } from 'lucide-react';
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const NewColumnBtn = styled.div`
-  border: 1px solid red;
-  height: fit-content;
-`;
+import styles from './trello.module.scss';
 
 const TrelloPage = () => {
   const [data, setData] = useState(initialData);
@@ -27,22 +16,6 @@ const TrelloPage = () => {
       columnCreateInputRef.current.focus();
     }
   }, [isCreatingColumn]);
-
-  console.log('Column Title', columnTitle);
-
-  const onDragStart = () => {
-    document.body.style.color = 'orange';
-    document.body.style.transition = 'background-color 0.2s ease';
-  };
-
-  const onDragUpdate = (update) => {
-    const { destination } = update;
-    const opacity = destination
-      ? destination.index / Object.keys(data.tasks).length
-      : 0;
-
-    document.body.style.backgroundColor = `rgba(153, 141,  217, ${opacity})`;
-  };
 
   const onDragEnd = (result) => {
     document.body.style.color = 'inherit';
@@ -122,13 +95,11 @@ const TrelloPage = () => {
         [newFinish.id]: newFinish,
       },
     };
-    console.log(newState);
     setData(newState);
     return;
   };
 
   const addNewColumn = (columnTitle) => {
-    console.log(data.columnOrder.length);
     const columnId = `column-${data.columnOrder.length + 1}`;
     const newColumnData = {
       ...data,
@@ -207,10 +178,7 @@ const TrelloPage = () => {
   };
 
   return (
-    <div
-      className="container"
-      style={{ display: 'flex', justifyContent: 'flex-start' }}
-    >
+    <div className="p-5 flex">
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
           droppableId="allColumns"
@@ -218,7 +186,11 @@ const TrelloPage = () => {
           type="column"
         >
           {(provided) => (
-            <Container {...provided.droppableProps} ref={provided.innerRef}>
+            <div
+              className="flex gap-5"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {data.columnOrder.map((columnId, index) => {
                 const column = data.columns[columnId];
                 const tasks = column.taskIds.map(
@@ -238,7 +210,7 @@ const TrelloPage = () => {
                 );
               })}
               {provided.placeholder}
-            </Container>
+            </div>
           )}
         </Droppable>
       </DragDropContext>

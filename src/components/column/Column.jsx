@@ -1,41 +1,8 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import InnerList from '../innerList/InnerList';
+import { Pencil, PlusIcon, Save, Trash2Icon } from 'lucide-react';
 import styles from './Column.module.scss';
-import {
-  MoreHorizontal,
-  Pencil,
-  Plus,
-  PlusIcon,
-  Save,
-  Trash2,
-  Trash2Icon,
-} from 'lucide-react';
-
-const Container = styled.div`
-  width: 300px;
-  margin: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 8px;
-  background-color: white;
-
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
-const Title = styled.h3`
-  width: 100%;
-  padding: 8px;
-`;
-const TaskList = styled.div`
-  border: 1px solid red;
-  height: 100%;
-  padding: 8px;
-  transition: background-color 0.2s ease;
-  background-color: ${(props) =>
-    props.isdraggingover ? 'skyblue' : 'inherit'};
-`;
 
 const Column = ({
   column,
@@ -85,8 +52,12 @@ const Column = ({
   return (
     <Draggable draggableId={column.id} index={index}>
       {(provided) => (
-        <Container {...provided.draggableProps} ref={provided.innerRef}>
-          <div className={styles.columnActions}>
+        <div
+          className="w-[300px] h-full p-2 flex flex-col border border-gray-300 rounded-xl bg-gray-100"
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+        >
+          <div className="flex items-center text-cyan-900 font-bold">
             {isEditing ? (
               <input
                 ref={inputRef}
@@ -98,55 +69,72 @@ const Column = ({
                 }}
               />
             ) : (
-              <Title {...provided.dragHandleProps}>{column.title}</Title>
+              <h3 className="w-full p-2" {...provided.dragHandleProps}>
+                {column.title}
+              </h3>
             )}
 
-            <div className={styles.btnsWrapper}>
+            <div className="flex gap-1">
               <button
-                className={styles.columnsEditBtn}
+                className="flex justify-center items-center cursor-pointer p-1 rounded-lg border border-transparent outline-none bg-transparent overflow-hidden transition duration-200 ease-in hover:bg-gray-200"
                 onClick={() => toggleEditing(column.id)}
               >
                 {isEditing ? <Save /> : <Pencil />}{' '}
               </button>
               <button
-                className={styles.deleteColumnBtn}
+                className="flex justify-center items-center cursor-pointer p-1 rounded-lg border border-transparent outline-none bg-transparent overflow-hidden transition duration-200 ease-in hover:bg-gray-200"
                 onClick={() => deleteColumn(column.id)}
               >
-                <Trash2Icon />
+                <Trash2Icon className="stroke-cyan-900" />
               </button>
             </div>
           </div>
           <Droppable droppableId={column.id} type="task">
             {(provided, snapshot) => (
-              <TaskList
+              <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 isdraggingover={snapshot.isDraggingOver}
+                className={`py-2 h-full mb-2 rounded-md ${
+                  snapshot.isDraggingOver ? 'bg-gray-200' : ''
+                }`}
               >
                 <InnerList tasks={tasks} />
                 {provided.placeholder}
-              </TaskList>
+              </div>
             )}
           </Droppable>
-          <div className={styles.footerBtns}>
+          <div className="w-full">
             {isCreating && (
               <textarea
                 ref={textAreaRef}
+                placeholder="Ввести заголовок для этой карточки"
+                style={{ resize: 'none' }}
+                className="px-3 py-2 rounded-md w-full min-h-[76px] resize-y border-transparent outline-none shadow-sm"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') createTask(column.id);
                 }}
               />
             )}
             <button
-              className={styles.addColumnItemBtn}
+              className={`flex gap-1 px-3 py-1.5 rounded-md ${
+                isCreating ? 'bg-blue-600 text-white hover:bg-blue-800' : ''
+              } hover:bg-gray-200 text-cyan-900 font-semibold transition duration-200`}
               onClick={() => {
                 createTask(column.id);
               }}
             >
-              {isCreating ? <Save /> : <PlusIcon />}
+              {isCreating ? (
+                'Добавить карточку'
+              ) : (
+                <>
+                  <PlusIcon className="stroke-cyan-900" />
+                  Добавить карточку
+                </>
+              )}
             </button>
           </div>
-        </Container>
+        </div>
       )}
     </Draggable>
   );

@@ -8,6 +8,13 @@ export const columns = [
     width: 150,
     sortable: false,
   },
+  {
+    field: 'expand',
+    headerName: 'Expand',
+    renderCell: (params) => (
+      <button onClick={() => console.log('Row expanded')}>Expand</button>
+    ),
+  },
 ];
 
 export const data = [
@@ -58,7 +65,7 @@ export const data = [
     date: '20.10.2023',
     time: '08:45 — 10:15',
     group: 'ALA_M_6KOY_A(5)',
-    lesson: 'Математика',
+    lesson: 'Русский язык',
   },
   {
     id: 8,
